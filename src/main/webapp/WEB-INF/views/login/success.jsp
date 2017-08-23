@@ -8,12 +8,9 @@
 </head>
 <body>
 Login성공
-<form action="<c:url value='/logout.do'/>" method="POST"> 
-${user}
-<input type="text" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
- <button type="submit">LOG OUT</button> 
- </form>
- 
+<form action="<c:url value='/logout'/>" method="POST"> 
+	<input type="text" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<button type="submit">LOG OUT</button> 
+</form>
 </body>
 </html>

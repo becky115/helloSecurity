@@ -8,13 +8,12 @@
 </head>
 <body>
 Login
-<form action="<c:url value='/login/success.do'/>" method="POST"> 
-<%-- <form action="<c:url value='j_spring_security_check.do'/>" method="POST">  --%>
-아이디 : <input type="text" id="user_id" name="j_username" value="admin"> 
-비밀번호 : <input type="password" id="password" name="j_password" value="admin">
-<input type="text" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
- <button type="submit">Sign in</button> 
- </form>
+<%-- <form action="<c:url value='/login/success.do'/>" method="POST">  --%>
+<form action="<c:url value='/login'/>" method="POST"> 
+	아이디 : <input type="text" id="user_id" name="username" value="admin"> 
+	비밀번호 : <input type="password" id="password" name="password" value="admin">
+	<input type="text" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<input type="submit" value="sigin in"/>
+</form>
 </body>
 </html>

@@ -10,13 +10,11 @@
 <h1>
 	Hello world!  
 </h1>
-하하핳하 
+하하핳하
 <P>  The time on the server is ${serverTime}.@ </P>
 <form action="<c:url value='/logout'/>" method="POST"> 
-${username}
-<input type="text" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
- <button type="submit">LOG OUT</button> 
- </form>
+	<input type="text" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<button type="submit">LOG OUT</button> 
+</form>
 </body>
 </html>
