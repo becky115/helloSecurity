@@ -20,14 +20,17 @@
 	</http> 
 
 	<authentication-manager>
-		<!-- <authentication-provider user-service-ref="memberService"/> -->
-		<authentication-provider>
-			<user-service>
-				<user name="guest" password="guest" authorities="ROLE_USER"/>
-				<user name="admin" password="admin" authorities="ROLE_ADMIN"/>
-			</user-service>
+		<authentication-provider user-service-ref="userService">
+			<!-- <password-encoder ref="passwordEncoder">
+				<salt-source ref="saltSource" />
+			</password-encoder> -->
 		</authentication-provider>
 	</authentication-manager>
+	
+	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+	<beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+		<beans:property name="userPropertyToUse" value="username" />
+	</beans:bean>
 
-<!-- 	<beans:bean id="memberService" class=""></beans:bean> -->
+	<beans:bean id="userService" class="com.becky.security.service.UserService"/>
 </beans:beans>

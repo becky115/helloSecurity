@@ -24,5 +24,51 @@
 	<context:component-scan base-package="com.becky.security" />
 	
 	
+	<!-- mybatis -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation" value="classpath:conf/mybatis-config.xml" />
+	</beans:bean>
+
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="sqlSessionBatch" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
+		<beans:constructor-arg index="1" value="BATCH" />
+	</beans:bean>
+	
+<!-- 	<beans:bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<beans:property name="algorithm" value="PBEWithMD5AndDES" />
+		<beans:property name="password" value="BRACE_PASS" />
+	</beans:bean>
+	
+	<beans:bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<beans:property name="config" ref="environmentVariablesConfiguration" />
+	</beans:bean>
+	
+	<beans:beans profile="local">
+		<beans:bean id="propertyConfigurer" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+			<beans:constructor-arg ref="configurationEncryptor" />
+			<beans:property name="locations">
+				<beans:list>
+					<beans:value>classpath:conf/mysql.properties</beans:value>
+				</beans:list>
+			</beans:property>
+		</beans:bean>
+	</beans:beans>
+	<beans:beans profile="dev">
+		<beans:bean id="propertyConfigurer" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+			<beans:constructor-arg ref="configurationEncryptor" />
+			<beans:property name="locations">
+				<beans:list>
+					<beans:value>classpath:conf/mysql.properties</beans:value>
+				</beans:list>
+			</beans:property>
+		</beans:bean>
+	</beans:beans> -->
+	
+<!-- 	<context:property-placeholder location="classpath:conf/mysql.properties" /> -->
 	
 </beans:beans>

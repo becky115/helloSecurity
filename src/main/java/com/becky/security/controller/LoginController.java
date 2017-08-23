@@ -1,4 +1,4 @@
-package com.becky.security;
+package com.becky.security.controller;
 
 import java.util.Locale;
 
