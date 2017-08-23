@@ -12,28 +12,8 @@
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/login/success.do" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
-			<!--<form-login login-page="/login/login.do" 
-				 default-target-url="/login/success.do"
 
-				always-use-default-target='true'
-				
-			/> 
-											 authentication-failure-url="/login/fail.do"	
-						login-processing-url="/j_spring_security_check.do"
-	j_spring_security_check
-				 default-target-url="/loginSuccess.do"
-                           authentication-failure-url="/loginFailed.do" 	
-							
-							username-parameter="user_id" 
-				password-parameter="password"
-				 authentication-failure-url="/login?error"  
-	
-			always-use-default-target='true'
-				default-target-url="/" 
-			
-<logout invalidate-session="true" logout-url="/logout.do"   logout-success-url="/login/login.do" />
--->
-		<!-- enable csrf protection -->
+		<form-login login-page="/login/login.do" username-parameter="username" password-parameter="password"/>
 		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/"></logout>
 		<csrf/> 
 	</http> 
