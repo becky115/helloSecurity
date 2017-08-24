@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.becky.security.domain.UserDomain;
 import com.becky.security.mapper.UserMapper;
 
 @Service
@@ -32,23 +33,31 @@ public class UserService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		logger.debug("loadUserByUsername" + userId);
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-		Map<String, Object> map = userMapper.select(userId);
-		String userName = (String) map.get("user_id");
-		String userPass = (String) map.get("passwd");
-		logger.info(map.toString());
+		UserDomain user = userMapper.select(userId);
+		String userName = user.getUserId();
+		String userPass = user.getPasswd();
+		Character lockFlag = user.getLockFlag();
+		logger.info(user.toString());
 		
-		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
+		Boolean enabled = true;
+		Boolean accountNonExpired = true;
+		Boolean credentialsNonExpired  = true;
+		Boolean accountNonLocked = lockFlag.equals('Y') ? false:true;
+		System.out.println("lock" + (accountNonLocked));
 		
-		String[] groupAuthority = map.get("group_authority").toString().split(",");
+		
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+		
+		String[] groupAuthority = user.getGroupAuthority().toString().split(",");
 		for(String role:groupAuthority){
-			roles.add(new SimpleGrantedAuthority(role));
+			authorities.add(new SimpleGrantedAuthority(role));
 		}
-		UserDetails user = new User(userName, userPass, roles);
-		System.out.println(user.toString());
-		System.out.println(user.getAuthorities());
-		System.out.println(user.getUsername());
+		UserDetails userDetail = new User(userName, userPass, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		
+		
 		logger.debug(user.toString());
-		return user;
+	
+		return userDetail;
 	}
 
 

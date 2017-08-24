@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.becky.security.mapper.UserMapper">
-	<select id="select" resultType="map">
+	<select id="select" resultMap="userMap">
 		SELECT A.user_id,
 			A.user_nm,
 			A.passwd,
@@ -15,4 +15,14 @@
 		WHERE A.user_id = #{p_user_id}
 		GROUP BY A.group_seq
 	</select>
+	
+	<resultMap type="com.becky.security.domain.UserDomain" id="userMap">
+		<id property="userId" column="user_id"/>
+		<result property="userName" column="user_nm"/>
+		<result property="passwd" column="passwd"/>
+		<result property="lockFlag" column="lock_flag"/>
+		<result property="groupSeq" column="group_seq"/>
+		<result property="groupName" column="group_name"/>
+		<result property="groupAuthority" column="group_authority"/>
+	</resultMap>
 </mapper>

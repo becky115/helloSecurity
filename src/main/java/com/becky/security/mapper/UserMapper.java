@@ -1,9 +1,9 @@
 package com.becky.security.mapper;
 
-import java.util.Map;
+import com.becky.security.domain.UserDomain;
 
 public interface UserMapper {
 
-	public abstract Map<String, Object> select(String userId);
+	public abstract UserDomain select(String userId);
 
 }
