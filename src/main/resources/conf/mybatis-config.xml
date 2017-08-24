@@ -10,6 +10,6 @@
 	</settings>
 
 	<mappers>
-		<mapper resource="com/becky/security/UserMapper.xml" />
+		<mapper resource="com/becky/security/mapper/UserMapper.xml" />
 	</mappers>
 </configuration>

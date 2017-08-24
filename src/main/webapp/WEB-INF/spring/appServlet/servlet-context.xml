@@ -21,22 +21,38 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.becky.security" />
 	
 	
-	<!-- mybatis -->
+	
+<!--
+	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+	    <beans:property name="url" value="jdbc:mysql://localhost:3306/testDB" />
+	    <beans:property name="username" value="root" />
+	    <beans:property name="password" value="ejlee" />
+	</beans:bean> 
+-->
+	<!-- mybatis 
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="dataSource" ref="dataSource"/>
 		<beans:property name="configLocation" value="classpath:conf/mybatis-config.xml" />
 	</beans:bean>
 
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
 	</beans:bean>
+	-->
 
-	<beans:bean id="sqlSessionBatch" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
-		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
-		<beans:constructor-arg index="1" value="BATCH" />
+	
+	
+	<beans:bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<beans:property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<beans:property name="locations">
+		<beans:list>
+			<beans:value>classpath:/conf/mysql.properties</beans:value>
+		</beans:list>
+	</beans:property>
+	
 	</beans:bean>
 	
 <!-- 	<beans:bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
@@ -69,6 +85,16 @@
 		</beans:bean>
 	</beans:beans> -->
 	
-<!-- 	<context:property-placeholder location="classpath:conf/mysql.properties" /> -->
+	
+<!-- 	<context:property-placeholder location="classpath:conf/mysql.properties" /> 
+
+	<beans:beans profile="dev">
+	
+	</beans:beans>
+	
+-->
+<context:component-scan base-package="com.becky.security" />
+
+	
 	
 </beans:beans>

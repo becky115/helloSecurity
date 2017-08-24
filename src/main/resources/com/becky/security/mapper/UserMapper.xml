@@ -7,10 +7,12 @@
 			A.passwd,
 			A.lock_flag,
 			A.group_seq,
-			B.group_code
+			B.group_name,
+			GROUP_CONCAT(C.group_authority) as group_authority
 		FROM USER A
 		INNER JOIN USER_GROUP B ON A.group_seq = B.group_seq
-		WHERE
-		A.user_id = #{p_user_id}
+		INNER JOIN USER_GROUP_AUTHORITIES C ON C.group_seq = B.group_seq
+		WHERE A.user_id = #{p_user_id}
+		GROUP BY A.group_seq
 	</select>
 </mapper>

@@ -3,8 +3,8 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/spring/security-context.xml
 			/WEB-INF/spring/root-context.xml
+			/WEB-INF/spring/security-context.xml
 		</param-value>
 	</context-param>
 	
@@ -40,8 +40,6 @@
 	<!-- use profile -->
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
-		<param-value>local</param-value>
-		<!-- <param-value>local, dev</param-value> -->
+		<param-value>dev</param-value>
 	</context-param>	
-
 </web-app>

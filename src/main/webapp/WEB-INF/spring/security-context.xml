@@ -32,5 +32,6 @@
 		<beans:property name="userPropertyToUse" value="username" />
 	</beans:bean>
 
-	<beans:bean id="userService" class="com.becky.security.service.UserService"/>
+
+	<!-- <beans:bean id="userService" class="com.becky.security.service.UserService"/> -->
 </beans:beans>
