@@ -29,12 +29,7 @@ CREATE TABLE `USER` (
 
 
 
-INSERT INTO `USER_GROUP` (`group_seq`, `group_name`, `group_desc`, `use_flag`)
-VALUES
-	(1, '관리자', '관리자 입니다.', 'Y'),
-	(2, '일반사용자', '일반사용자 입니다.', 'Y');
-
-INSERT INTO `USER_GROUP_AUTHORITIES` (`group_seq`, `group_authority`)
+INSERT INTO `USER_GR` (`group_seq`, `group_authority`)
 VALUES
 	(1, 'ROLE_ADMIN'),
 	(1, 'ROLE_USER'),

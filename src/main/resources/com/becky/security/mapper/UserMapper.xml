@@ -12,7 +12,7 @@
 		FROM USER A
 		INNER JOIN USER_GROUP B ON A.group_seq = B.group_seq
 		INNER JOIN USER_GROUP_AUTHORITIES C ON C.group_seq = B.group_seq
-		WHERE A.user_id = #{p_user_id}
+		WHERE A.user_id = #{userId}
 		GROUP BY A.group_seq
 	</select>
 	
@@ -25,4 +25,22 @@
 		<result property="groupName" column="group_name"/>
 		<result property="groupAuthority" column="group_authority"/>
 	</resultMap>
+	
+	<!-- resultType="java.util.List" -->
+	<select id="selectList" resultMap="userMap">
+		SELECT A.user_id,
+				A.user_nm,
+				A.passwd
+			FROM USER A
+	</select>
+	
+	<update id="update">
+		Update	USER
+		<set>
+			passwd = #{encodedPassword}
+		</set>
+		WHERE
+			user_id = #{userId}
+	</update>
+	
 </mapper>

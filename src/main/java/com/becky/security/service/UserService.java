@@ -3,6 +3,7 @@ package com.becky.security.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -43,7 +44,7 @@ public class UserService implements UserDetailsService{
 		Boolean accountNonExpired = true;
 		Boolean credentialsNonExpired  = true;
 		Boolean accountNonLocked = lockFlag.equals('Y') ? false:true;
-		System.out.println("lock" + (accountNonLocked));
+		System.out.println("userPass" + (userPass));
 		
 		
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
@@ -53,7 +54,7 @@ public class UserService implements UserDetailsService{
 			authorities.add(new SimpleGrantedAuthority(role));
 		}
 		UserDetails userDetail = new User(userName, userPass, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		
+		System.out.println("userDetail" + userDetail.getPassword());
 		
 		logger.debug(user.toString());
 	
@@ -66,6 +67,16 @@ public class UserService implements UserDetailsService{
 		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
 		System.out.println(roles.size());
 		System.out.println(Arrays.toString(roles.toArray()));
+	}
+
+	public List<UserDomain> selectList() {
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		return userMapper.selectList();
+	}
+
+	public int update(String userId, String encodedPassword) {
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		return userMapper.update(userId, encodedPassword);
 	}
 
 
