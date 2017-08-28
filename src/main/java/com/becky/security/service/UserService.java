@@ -1,10 +1,8 @@
 package com.becky.security.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -57,16 +55,8 @@ public class UserService implements UserDetailsService{
 		System.out.println("userDetail" + userDetail.getPassword());
 		
 		logger.debug(user.toString());
-	
+	//org.springframework.security.authentication.BadCredentialsException:
 		return userDetail;
-	}
-
-
-
-	public static void main(String[] args) {
-		Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
-		System.out.println(roles.size());
-		System.out.println(Arrays.toString(roles.toArray()));
 	}
 
 	public List<UserDomain> selectList() {
@@ -78,7 +68,6 @@ public class UserService implements UserDetailsService{
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		return userMapper.update(userId, encodedPassword);
 	}
-
 
 }
 

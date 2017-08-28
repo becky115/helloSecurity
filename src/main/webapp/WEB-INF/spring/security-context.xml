@@ -14,31 +14,39 @@
 		<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
 			
 		<form-login login-page="/login/login.do" 
-			login-processing-url="/login"/>
+			login-processing-url="/login"
+			authentication-success-handler-ref="authSuccessHandler"
+			authentication-failure-handler-ref="authFailHandler"/>
 		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/" />
 		<csrf/> 
-	</http> 
+	</http>
+	
+	<beans:bean id="authSuccessHandler" class="com.becky.security.handler.AuthSuccessHandler"></beans:bean>
+	<beans:bean id="authFailHandler" class="com.becky.security.handler.AuthFailureHandler"></beans:bean>
 
+<!-- 
 	<authentication-manager>
 		<authentication-provider user-service-ref="userService">
-<!-- 			<password-encoder ref="passwordEncoder">
-				<salt-source ref="saltSource" />
-			</password-encoder> -->
 			<password-encoder ref="passwordEncoder"/>
 		</authentication-provider>
 	</authentication-manager>
-	
+-->
+
+	<authentication-manager>
+		<authentication-provider ref="daoAuthenticationProvider"></authentication-provider>
+	</authentication-manager>
+
 	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	<beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
-		<beans:property name="userPropertyToUse" value="username" />
+	
+	<beans:bean id="daoAuthenticationProvider" class="com.becky.security.service.LoginAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userService"></beans:property>
+		<beans:property name="passwordEncoder" ref="passwordEncoder"></beans:property>
+		
 	</beans:bean>
 
-
-	<!-- password encode
-	<beans:property name="transactionManager" ref="transactionManager" />
-	-->
+	<!--
 	<beans:bean class="com.becky.security.password.DatabasePasswordSecureBean" init-method="secureDatabase" depends-on="dataSource">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
 	</beans:bean>
-	
+	 -->
 </beans:beans>

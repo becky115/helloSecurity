@@ -1,10 +1,5 @@
 package com.becky.security.domain;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
 public class UserDomain {
 //extends User
 //	public UserDomain(String username, String password, boolean enabled, boolean accountNonExpired,

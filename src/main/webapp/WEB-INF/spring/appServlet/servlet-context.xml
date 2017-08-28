@@ -53,16 +53,17 @@
 	</beans:bean>
 	
 	
+	
+	<!-- 
 	<beans:bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 		<beans:property name="ignoreUnresolvablePlaceholders" value="true"/>
 		<beans:property name="locations">
-		<beans:list>
-			<beans:value>classpath:/conf/mysql.properties</beans:value>
-		</beans:list>
-	</beans:property>
-	
+			<beans:list>
+				<beans:value>classpath:/conf/mysql.properties</beans:value>
+			</beans:list>
+		</beans:property>
 	</beans:bean>
-	
+	 -->
 
 	
 <!-- 	<beans:bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">

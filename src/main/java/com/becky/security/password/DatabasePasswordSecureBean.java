@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 //import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.becky.security.domain.UserDomain;
 import com.becky.security.service.UserService;
