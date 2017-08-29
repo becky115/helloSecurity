@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:sec="http://www.springframework.org/schema/security" 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<sec:http auto-config='true' use-expressions="true">
+		<sec:intercept-url pattern="/login/login.do" access="permitAll" />
+		<sec:intercept-url pattern="/login/success.do" access="hasRole('ROLE_ADMIN')" />
+		<sec:intercept-url pattern="/resources/**" access="permitAll" />
+		<sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+			
+		<sec:form-login login-page="/login/login.do" 
+			login-processing-url="/login"
+			authentication-success-handler-ref="authSuccessHandler"
+			authentication-failure-handler-ref="authFailHandler"/>
+		<sec:logout invalidate-session="true" logout-url="/logout" logout-success-url="/" />
+		<sec:csrf/> 
+	</sec:http>
+	
+	<bean id="authSuccessHandler" class="com.becky.security.handler.AuthSuccessHandler"></bean>
+	<bean id="authFailHandler" class="com.becky.security.handler.AuthFailureHandler"></bean>
+
+<!-- 
+	<authentication-manager>
+		<authentication-provider user-service-ref="userService">
+			<password-encoder ref="passwordEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+-->
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider ref="daoAuthenticationProvider"/>
+	</sec:authentication-manager>
+
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	
+	<bean id="daoAuthenticationProvider" class="com.becky.security.service.LoginAuthenticationProvider">
+		<property name="userDetailsService" ref="userService"></property>
+		<property name="passwordEncoder" ref="passwordEncoder"></property>
+		
+	</bean>
+
+	<!--
+	<bean class="com.becky.security.password.DatabasePasswordSecureBean" init-method="secureDatabase" depends-on="dataSource">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	 -->
+	 
+	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor" >
+		<property name="authenticationManager" ref="authenticationManager"/>
+		<property name="accessDecisionManager" ref="accessDecisionManager"/>
+		<property name="securityMetadataSource" ref="filterSecurityMetadataSource"/>
+	</bean> 
+
+	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+		<sec:filter-chain-map request-matcher="ant"><!--   filter-chain-map path-type="ant"> -->
+			<sec:filter-chain pattern="/**" filters="filterSecurityInterceptor"/>
+		</sec:filter-chain-map>
+	</bean>
+	
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.access.vote.RoleVoter">
+					<property name="rolePrefix" value="" />
+				</bean>
+			</list>
+		</constructor-arg>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+
+	<bean id="filterSecurityMetadataSource" class="com.becky.security.filter.FilterSecurityMetadataSource"/>
+
+</beans>

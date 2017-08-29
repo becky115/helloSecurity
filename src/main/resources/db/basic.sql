@@ -36,8 +36,8 @@ VALUES
 	(2, 'ROLE_USER');
 	
 	
-INSERT INTO `USER` (`user_id`, `user_nm`, `passwd`, `lock_flag`, `group_seq`)
+INSERT INTO `USER` (`user_id`, `user_nm`, `passwd`, `lock_flag`)
 VALUES
-	('admin', '관리자', 'admin', 'N', 1),
-	('guest', '게스트', 'guest', 'N', 2);
+	('admin', '관리자', 'admin', 'N'),
+	('guest', '게스트', 'guest', 'N');
 	

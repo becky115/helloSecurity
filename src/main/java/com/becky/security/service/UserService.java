@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -23,6 +25,8 @@ public class UserService implements UserDetailsService{
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
 	private SqlSession sqlSession;
+	
+	private static final String USER_SESSION = "USER_SESSION";
 	
 	public void setSqlSession(SqlSessionTemplate sqlSession) {
 		this.sqlSession = sqlSession;
@@ -58,6 +62,12 @@ public class UserService implements UserDetailsService{
 	//org.springframework.security.authentication.BadCredentialsException:
 		return userDetail;
 	}
+	
+	
+	public UserDomain select(String userId) {
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		return userMapper.select(userId);
+	}
 
 	public List<UserDomain> selectList() {
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
@@ -68,6 +78,14 @@ public class UserService implements UserDetailsService{
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		return userMapper.update(userId, encodedPassword);
 	}
-
+	
+	
+	public UserDomain getUserDomain(HttpSession session){
+		 return (UserDomain) session.getAttribute(USER_SESSION); 
+	}
+	
+	public void setUserDomain(HttpSession session, UserDomain userDomain){
+		session.setAttribute(USER_SESSION, userDomain); 
+	}
 }
 
