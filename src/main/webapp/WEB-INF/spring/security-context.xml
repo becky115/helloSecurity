@@ -148,12 +148,12 @@
 			<list>
 				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
 				<bean class="org.springframework.security.access.vote.RoleVoter">
-					<property name="rolePrefix" value="" />
+					<property name="rolePrefix" value=""/>
 				</bean>
 				<bean class="org.springframework.security.web.access.expression.WebExpressionVoter" />
 			</list>
 		</constructor-arg>
-		<property name="allowIfAllAbstainDecisions" value="false" />
+		<property name="allowIfAllAbstainDecisions" value="false"/>
 	</bean>
 
 	<bean id="filterSecurityMetadataSource" class="com.becky.security.filter.FilterSecurityMetadataSource"/>

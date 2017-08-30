@@ -7,7 +7,12 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<sec:http auto-config='true' use-expressions="true">
+<!-- 
+	<sec:global-method-security 
+		secured-annotations="enabled"
+		access-decision-manager-ref="accessDecisionManager"/> -->
+
+	<sec:http auto-config='true' use-expressions="true" access-decision-manager-ref="accessDecisionManager">
 		<sec:intercept-url pattern="/login/login.do" access="permitAll" />
 		<sec:intercept-url pattern="/login/success.do" access="hasRole('ROLE_ADMIN')" />
 		<sec:intercept-url pattern="/resources/**" access="permitAll" />
@@ -49,29 +54,22 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	 -->
-	 
-	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor" >
-		<property name="authenticationManager" ref="authenticationManager"/>
-		<property name="accessDecisionManager" ref="accessDecisionManager"/>
-		<property name="securityMetadataSource" ref="filterSecurityMetadataSource"/>
-	</bean> 
-
-	<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
-		<sec:filter-chain-map request-matcher="ant"><!--   filter-chain-map path-type="ant"> -->
-			<sec:filter-chain pattern="/**" filters="filterSecurityInterceptor"/>
-		</sec:filter-chain-map>
-	</bean>
 	
-
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+<!-- org.springframework.security.access.vote.UnanimousBased 
+org.springframework.security.access.vote.AffirmativeBased
+-->
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
 		<constructor-arg>
 			<list>
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
 				<bean class="org.springframework.security.access.vote.RoleVoter">
 					<property name="rolePrefix" value="" />
 				</bean>
+				<bean class="org.springframework.security.web.access.expression.WebExpressionVoter" />
+				<bean class="com.becky.security.service.CustomVoter" />
 			</list>
 		</constructor-arg>
-		<property name="allowIfAllAbstainDecisions" value="false" />
+		<property name="allowIfAllAbstainDecisions" value="false"/>
 	</bean>
 
 	<bean id="filterSecurityMetadataSource" class="com.becky.security.filter.FilterSecurityMetadataSource"/>

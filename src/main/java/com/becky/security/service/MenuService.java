@@ -133,7 +133,11 @@ public class MenuService {
 	
 	//authList 권한 없는 리스트
 	public boolean checkAuth(Integer groupSeq, String menuUrl){
-		logger.debug("checkAuth menuUrl "+groupSeq+","+ menuUrl);
+		System.out.println("check");
+		System.out.println("check");
+		System.out.println("check");
+		System.out.println("check");
+		logger.info("checkAuth menuUrl "+groupSeq+","+ menuUrl);
 		List<Object> menuUrlList = authList.get(groupSeq);
 		System.out.println("groupSeq" + groupSeq +" menuUrl"+menuUrl);
 		System.out.println(menuUrlList);
